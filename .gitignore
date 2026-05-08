@@ -1,0 +1,46 @@
+# See: https://github.com/github/gitignore/blob/main/Node.gitignore
+
+# dependencies
+node_modules/
+
+# Angular cache / build output
+dist/
+out-tsc/
+.angular/
+
+# misc build artifacts
+*.tsbuildinfo
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# test output
+coverage/
+.nyc_output/
+
+# environment files
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs/editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Angular CLI
+.history/
+

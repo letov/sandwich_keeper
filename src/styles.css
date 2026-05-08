@@ -1,0 +1,11 @@
+/* You can put global styles here. */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+}
+
