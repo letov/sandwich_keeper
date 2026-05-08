@@ -15,3 +15,7 @@ npm start
 
 Open: `http://localhost:4200`
 
+## Demo
+
+![](https://raw.githubusercontent.com/letov/sandwich_keeper/main/demo.gif)
+
