@@ -9,7 +9,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     <div class="layout">
       <header class="header">
         <h1>sandwich_keeper</h1>
-        <a routerLink="/order">Order</a>
+        <nav class="nav">
+          <a routerLink="/order">Order</a>
+          <a routerLink="/sandwich_maker">Sandwich Maker</a>
+        </nav>
       </header>
       <main>
         <router-outlet />
@@ -32,6 +35,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
         align-items: center;
         justify-content: space-between;
         margin-bottom: 16px;
+      }
+      .nav {
+        display: flex;
+        gap: 12px;
       }
       .header a {
         color: #2563eb;

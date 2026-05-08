@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { PlaceOrderRequest, ProductOptionsResponse } from './order.models';
+import {
+  PlaceOrderRequest,
+  ProductOptionsResponse,
+  RecentOrder,
+} from './order.models';
 // import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
@@ -67,6 +71,72 @@ export class OrderApiService {
 
     // Temporary mock response while POST is disabled by request.
     return of({ status: 'ok' });
+  }
+
+  getRecentOrders(limit: number): Observable<RecentOrder[]> {
+    // return this.http.get<RecentOrder[]>(
+    //   `/api/v1/orders/recent?limit=${encodeURIComponent(String(limit))}`,
+    // );
+
+    // Temporary mock response from the task description.
+    const mockOrders: RecentOrder[] = [
+      {
+        order_number: 1042,
+        status: 'In Progress',
+        items: [
+          {
+            product_type: 'sandwich',
+            selections: {
+              bread: 'white',
+              filling: ['ham', 'cheese'],
+              sauces: ['mayo'],
+              toasted: 'yes',
+            },
+          },
+          {
+            product_type: 'sandwich',
+            selections: {
+              bread: 'wheat',
+              filling: ['chicken'],
+              sauces: ['bbq'],
+              toasted: 'no',
+            },
+          },
+        ],
+      },
+      {
+        order_number: 1041,
+        status: 'Ready',
+        items: [
+          {
+            product_type: 'sandwich',
+            selections: {
+              bread: 'white',
+              filling: ['cheese'],
+              sauces: [],
+              toasted: 'yes',
+            },
+          },
+        ],
+      },
+      {
+        order_number: 1040,
+        status: 'New',
+        items: [
+          {
+            product_type: 'sandwich',
+            selections: {
+              bread: 'wheat',
+              filling: ['ham'],
+              sauces: ['mayo', 'bbq'],
+              toasted: 'no',
+            },
+          },
+        ],
+      },
+    ];
+
+    return of(mockOrders.slice(0, limit));
   }
 }
 

@@ -37,3 +37,16 @@ export interface PlaceOrderRequest {
   }>;
 }
 
+export type OrderStatus = 'New' | 'In Progress' | 'Ready';
+
+export interface RecentOrderItem {
+  product_type: string;
+  selections: Record<string, string | string[]>;
+}
+
+export interface RecentOrder {
+  order_number: number;
+  status: OrderStatus;
+  items: RecentOrderItem[];
+}
+

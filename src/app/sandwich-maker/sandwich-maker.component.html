@@ -1,0 +1,42 @@
+<section class="maker-page">
+  <header class="maker-header">
+    <h2>Sandwich Maker</h2>
+    <button type="button" (click)="fetchRecentOrders()">Refresh</button>
+  </header>
+
+  <div *ngIf="loading">Loading recent orders...</div>
+  <div *ngIf="loadError" class="error">{{ loadError }}</div>
+
+  <div *ngIf="!loading && !loadError" class="grid">
+    <article class="card" *ngFor="let order of getCardSlots(); trackBy: trackByOrder">
+      <ng-container *ngIf="order; else emptyCard">
+        <div class="card-header">
+          <strong>Order #{{ order.order_number }}</strong>
+          <span class="status">{{ order.status }}</span>
+        </div>
+
+        <div class="item" *ngFor="let item of order.items; let idx = index">
+          <div class="item-title">Item {{ idx + 1 }}: {{ item.product_type }}</div>
+          <ul>
+            <li *ngFor="let entry of selectionEntries(item.selections)">
+              {{ entry[0] }}: {{ formatSelectionValue(entry[1]) }}
+            </li>
+          </ul>
+        </div>
+
+        <button
+          type="button"
+          [disabled]="!nextStatus(order.status)"
+          (click)="moveToNextStatus(order.order_number)"
+        >
+          {{ nextStatusLabel(order.status) }}
+        </button>
+      </ng-container>
+
+      <ng-template #emptyCard>
+        <div class="empty">No order</div>
+      </ng-template>
+    </article>
+  </div>
+</section>
+
