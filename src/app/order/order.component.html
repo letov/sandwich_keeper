@@ -1,0 +1,72 @@
+<div class="order-page">
+  <section class="panel">
+    <h2>Product Constructor</h2>
+
+    <div *ngIf="loading">Loading options...</div>
+    <div *ngIf="loadError" class="error">
+      {{ loadError }}
+      <button type="button" (click)="fetchOptions()">Retry</button>
+    </div>
+
+    <form *ngIf="!loading && !loadError" [formGroup]="form" class="form">
+      <div class="option-block" *ngFor="let option of options; trackBy: trackById">
+        <label class="option-title">
+          {{ option.label }}
+          <span *ngIf="option.required">*</span>
+        </label>
+
+        <ng-container [ngSwitch]="option.type">
+          <div *ngSwitchCase="'select_one'">
+            <select [formControlName]="option.id">
+              <option [ngValue]="null">Select...</option>
+              <option *ngFor="let value of option.values; trackBy: trackById" [value]="value.id">
+                {{ value.label }}
+              </option>
+            </select>
+          </div>
+
+          <div *ngSwitchCase="'select_multiple'" class="checkbox-list">
+            <label *ngFor="let value of option.values; trackBy: trackById" class="checkbox-row">
+              <input
+                type="checkbox"
+                [checked]="isMultiChecked(option, value.id)"
+                (change)="onMultiToggle(option, value.id, $any($event.target).checked)"
+              />
+              <span>{{ value.label }}</span>
+            </label>
+          </div>
+        </ng-container>
+      </div>
+
+      <button type="button" (click)="addToCart()">Add Product To Cart</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>Cart</h2>
+
+    <div *ngIf="!cart.length" class="muted">Cart is empty.</div>
+
+    <div class="cart-item" *ngFor="let item of cart; trackBy: trackById">
+      <div class="cart-item-header">
+        <strong>{{ item.productType }}</strong>
+        <button type="button" class="danger" (click)="removeFromCart(item.id)">Delete</button>
+      </div>
+      <ul>
+        <li *ngFor="let selection of item.selections">
+          {{ selection.optionLabel }}: {{ selection.valueLabels.length ? selection.valueLabels.join(', ') : '-' }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="cart-footer">
+      <div class="actions">
+        <button type="button" (click)="placeOrder()">Place Order</button>
+        <button type="button" class="secondary" (click)="cancelOrder()">Cancel Order</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<p *ngIf="orderMessage" class="message">{{ orderMessage }}</p>
+
